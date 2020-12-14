@@ -2,7 +2,7 @@
 #Header
 """
 ce programme permet de jouer dans une interface graphique à space invader
-vous avez 3 vie, le but et d'avoir de le meilleur score possible
+vous avez 3 vies, le but et d'avoir de le meilleur score possible
 Auteur: Joris CLEMENT.
 date de réalisation: 22/12/2020
 
@@ -18,7 +18,7 @@ TODO -
 """
 
 #Importation des bibliothéques
-
+from spaceInvaders_Lib import creatWindow
 
 
 #Fonction nécessaires au programme
@@ -26,3 +26,5 @@ TODO -
 
 
 #Programme principal
+
+creatWindow()
