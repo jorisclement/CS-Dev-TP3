@@ -22,7 +22,7 @@ from tkinter import Tk,Label,Button
 
 #Fonctions:
 
-def creatWindow ():
+def createWindow ():
     w=Tk()
     w.geometry('2400x500')
     w.title('Space Invaders')
@@ -33,8 +33,16 @@ def creatWindow ():
     score.grid(row = 0, column = 0)
     score.configure(font = 20)
 
+    labelLives = Label(w, text = 'Vie restantes: 3', fg = 'black')
+    labelLives.grid(row = 0, column = 2)
+    labelLives.configure(font = 20)
+
     buttonLeave = Button(w, text = 'Quitter', command = w.destroy)
-    buttonLeave.grid(row = 0, column = 1)
+    buttonLeave.grid(row = 2, column = 2)
     buttonLeave.configure(font = 20)
+
+    buttonBegin = Button(w, text = 'Nouvelle partie', command = '')
+    buttonBegin.grid(row = 1, column = 2)
+    buttonBegin.configure(font = 20)
     
     w.mainloop()   
