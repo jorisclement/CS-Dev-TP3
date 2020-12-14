@@ -18,7 +18,7 @@ TODO -
 """
 
 #Importation des bibliothéques
-from spaceInvaders_Lib import creatWindow
+from spaceInvaders_Lib import createWindow
 
 
 #Fonction nécessaires au programme
@@ -27,4 +27,4 @@ from spaceInvaders_Lib import creatWindow
 
 #Programme principal
 
-creatWindow()
+createWindow()
