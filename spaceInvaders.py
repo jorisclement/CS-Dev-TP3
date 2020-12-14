@@ -16,8 +16,9 @@ TODO -
      -
 """
 
+
 #Importation des bibliothéques
-from spaceInvaders_Lib import createWindow
+from spaceInvaders_Lib import alien,createWindow
 
 
 #Fonction nécessaires au programme
@@ -27,3 +28,5 @@ from spaceInvaders_Lib import createWindow
 #Programme principal
 
 createWindow()
+alien=alien(12,78)
+alien.affichageAlien()

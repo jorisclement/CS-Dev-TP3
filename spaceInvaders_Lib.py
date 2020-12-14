@@ -23,16 +23,17 @@ from tkinter import Tk ,Label,Button,Canvas,PhotoImage
 #Fonctions:
 
 def createWindow ():
+    global canevas
     w=Tk()
     w.geometry('2400x1000')
     w.title('Space Invaders')
 
-    Canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
-    Canevas.grid(row = 1, column = 0)
+    canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
+    canevas.grid(row = 1, column = 0)
     photo=PhotoImage(file="jean-pierre.gif")
-    item = Canevas.create_image(800, 800,image = photo)
-       
+    item = canevas.create_image(600, 500,image = photo)
 
+    
 
     score = Label(w, text = 'score :', fg = 'black')
     score.grid(row = 0, column = 0, sticky = 'nw')
@@ -51,3 +52,13 @@ def createWindow ():
     buttonBegin.configure(font = 20)
     
     w.mainloop()   
+
+
+class alien :
+    def __init__(self,hp,position):
+        self.hp=hp
+        self.position=position
+
+    def affichageAlien (self):
+        self.alien = canevas.create_rectangle(600,500,200,300)
+        print("wow")
