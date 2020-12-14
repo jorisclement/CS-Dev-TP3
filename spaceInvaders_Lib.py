@@ -24,12 +24,12 @@ from tkinter import Tk ,Label,Button,Canvas,PhotoImage
 
 def createWindow ():
     w=Tk()
-    w.geometry('2400x500')
+    w.geometry('2400x700')
     w.title('Space Invaders')
 
-    Canevas = Canvas(w, width = 2200, height = 450,  bg ='white')
-    Canevas.grid(row = 0, column = 3)
-    item = Canevas.create_image(2200, 450,anchor="center",image = PhotoImage(file = "pitbull.gif") )
+    Canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
+    Canevas.grid(row = 1, column = 0)
+    item = Canevas.create_image(120, 350,anchor="center",image = PhotoImage(file = "pitbull.gif") )
        
 
 
@@ -42,11 +42,11 @@ def createWindow ():
     labelLives.configure(font = 20)
 
     buttonLeave = Button(w, text = 'Quitter', command = w.destroy)
-    buttonLeave.grid(row = 2, column = 2)
+    buttonLeave.grid(row = 2, column = 4)
     buttonLeave.configure(font = 20)
 
     buttonBegin = Button(w, text = 'Nouvelle partie', command = '')
-    buttonBegin.grid(row = 1, column = 2)
+    buttonBegin.grid(row = 1, column = 4)
     buttonBegin.configure(font = 20)
     
     w.mainloop()   
