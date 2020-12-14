@@ -29,7 +29,7 @@ def createWindow ():
 
     Canevas = Canvas(w, width = 2200, height = 450,  bg ='white')
     Canevas.grid(row = 0, column = 3)
-    item = Canevas.create_image(2200, 450,anchor="center",image = PhotoImage(file = "pitbull.jpg") )
+    item = Canevas.create_image(2200, 450,anchor="center",image = PhotoImage(file = "pitbull.gif") )
        
 
 
