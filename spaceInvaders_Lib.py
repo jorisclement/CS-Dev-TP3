@@ -22,6 +22,9 @@ from tkinter import Tk ,Label,Button,Canvas,PhotoImage
 
 #Fonctions:
 
+
+
+
 def createWindow ():
     w=Tk()
     w.geometry('2400x1000')
@@ -30,7 +33,7 @@ def createWindow ():
     Canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
     Canevas.grid(row = 1, column = 0)
     photo=PhotoImage(file="jean-pierre.gif")
-    item = Canevas.create_image(800, 800,image = photo)
+    item = Canevas.create_image(600, 500,image = photo)
        
 
 
