@@ -28,7 +28,7 @@ def createWindow ():
     w.title('Space Invaders')
 
     Canevas = Canvas(w, width = 2200, height = 450,  bg ='white')
-    Canevas.grid(row = 0, column = 3)
+    Canevas.grid(row = 1, column = 0)
     item = Canevas.create_image(2200, 450,anchor="center",image = PhotoImage(file = "pitbull.jpg") )
        
 
