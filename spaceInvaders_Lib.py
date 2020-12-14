@@ -29,9 +29,7 @@ def createWindow ():
 
     Canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
     Canevas.grid(row = 1, column = 0)
-    item = Canevas.create_image(120, 350,anchor="center",image = PhotoImage(file = "pitbull.gif"))
-       
-
+    item = Canevas.create_image(0, 0, anchor = 'nw', image = PhotoImage(file = "pitbull.gif"))
 
     score = Label(w, text = 'score :', fg = 'black')
     score.grid(row = 0, column = 0, sticky = 'nw')
