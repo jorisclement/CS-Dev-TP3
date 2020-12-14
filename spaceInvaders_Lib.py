@@ -27,11 +27,11 @@ def createWindow ():
     w.geometry('2400x500')
     w.title('Space Invaders')
 
-    Canevas = Canvas(w, width = 2200, height = 450,  bg ='white')
-    Canevas.grid(row = 1, column = 0)
-    item = Canevas.create_image(2200, 450,anchor="center",image = PhotoImage(file = "pitbull.jpg") )
-       
+    Photo = PhotoImage(file = "pitbull.gif")
 
+    Canevas = Canvas(w, width = 2200, height = 450,  bg ='white')
+    Canevas.grid(row = 0, column = 3)
+    item = Canevas.create_image(200, 250, anchor="center",image = Photo)
 
     score = Label(w, text = 'score :', fg = 'black')
     score.grid(row = 0, column = 0)
