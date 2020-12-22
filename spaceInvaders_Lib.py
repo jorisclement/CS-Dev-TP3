@@ -11,56 +11,58 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -
-     -
+TODO -Faire bouger "l'alien"
+     -Tout le reste
      -
      -
 """
 
 ## Importation des bibliothéques ##
-from tkinter import Tk ,Label,Button,Canvas,PhotoImage
+from tkinter import Tk ,Label, Button, Canvas, PhotoImage
 
 
 ## Classes ##
 class alien:
-    def __init__(self, hp, position, canevas):
+    def __init__(self, hp, position):
         self.hp=hp
         self.position = position
-        self.canevas = canevas
 
-    def affichageAlien (self):
-        self.alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red")
-        print("wow")
+        self.w = Tk()
+        self.canevas = Canvas(self.w, width = 1200, height = 650,  bg ='white')
 
 
-
-## Fonctions graphiques ##
-def createWindow():
-    w = Tk()
-    w.geometry('2400x1000')
-    w.title('Space Invaders')
-
-    canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
-    canevas.grid(row = 1, column = 0)
-    photo = PhotoImage(file="jean-pierre.gif")
-    item = canevas.create_image(600, 500, image = photo)
-
+    def affichageAlien(self):
+        self.alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red", tags = "A")
     
 
-    score = Label(w, text = 'score :', fg = 'black')
-    score.grid(row = 0, column = 0, sticky = 'nw')
-    score.configure(font = 20)
+    def createWindow(self):       
+        self.w.geometry('2400x1000')
+        self.w.title('Space Invaders')
+       
+        self.canevas.grid(row = 1, column = 0)
+        self.photo = PhotoImage(file="jean-pierre.gif")
+        self.item = self.canevas.create_image(600, 500, image = self.photo, tags = "B")
+        self.canevas.tag_raise("A")     # Ces deux lignes gèrent la position en profondeur des différents élèments du
+        self.canevas.tag_lower("B")     # Canvas  
 
-    labelLives = Label(w, text = 'Vie restantes: 3', fg = 'black')
-    labelLives.grid(row = 0, column = 0, sticky = 'ne')
-    labelLives.configure(font = 20)
+        self.score = Label(self.w, text = 'score :', fg = 'black')
+        self.score.grid(row = 0, column = 0, sticky = 'nw')
+        self.score.configure(font = 20)
 
-    buttonLeave = Button(w, text = 'Quitter', command = w.destroy)
-    buttonLeave.grid(row = 1, column = 1, sticky = 's')
-    buttonLeave.configure(font = 20)
+        self.labelLives = Label(self.w, text = 'Vie restantes: 3', fg = 'black')
+        self.labelLives.grid(row = 0, column = 0, sticky = 'ne')
+        self.labelLives.configure(font = 20)
 
-    buttonBegin = Button(w, text = 'Nouvelle partie', command = '')
-    buttonBegin.grid(row = 1, column = 1)
-    buttonBegin.configure(font = 20)
+        self.buttonLeave = Button(self.w, text = 'Quitter', command = self.w.destroy)
+        self.buttonLeave.grid(row = 1, column = 1, sticky = 's')
+        self.buttonLeave.configure(font = 20)
 
-    return w, canevas
+        self.buttonBegin = Button(self.w, text = 'Nouvelle partie', command = '')
+        self.buttonBegin.grid(row = 1, column = 1)
+        self.buttonBegin.configure(font = 20)
+
+        self.w.mainloop()
+
+
+
+    

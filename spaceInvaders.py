@@ -18,7 +18,7 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import alien, createWindow
+from spaceInvaders_Lib import alien
 from tkinter import PhotoImage
 
 
@@ -28,13 +28,8 @@ from tkinter import PhotoImage
 ## Programme principal ##
 
 # Affichage du jeu #
-Window = createWindow()
-
-photo = PhotoImage(file="jean-pierre.gif")
-item = Window[1].create_image(600, 500, image = photo)
-
-alien=alien(12, 78, Window[1])
+alien = alien(12, 78)
 alien.affichageAlien()
+alien.createWindow()
 
-Window[0].mainloop()
 
