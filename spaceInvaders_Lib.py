@@ -17,32 +17,33 @@ TODO -
      -
 """
 
-#Importation des bibliothéques
+## Importation des bibliothéques ##
 from tkinter import Tk ,Label,Button,Canvas,PhotoImage
 
-#Classes:
+
+## Classes ##
 class alien:
-    def __init__(self,hp,position,canevas):
+    def __init__(self, hp, position, canevas):
         self.hp=hp
-        self.position=position
+        self.position = position
         self.canevas = canevas
 
     def affichageAlien (self):
-        self.alien = self.canevas.create_rectangle(600,500,200,300)
+        self.alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red")
         print("wow")
 
 
 
 ## Fonctions graphiques ##
 def createWindow():
-    w=Tk()
+    w = Tk()
     w.geometry('2400x1000')
     w.title('Space Invaders')
 
     canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
     canevas.grid(row = 1, column = 0)
-    photo=PhotoImage(file="jean-pierre.gif")
-    item = canevas.create_image(600, 500,image = photo)
+    photo = PhotoImage(file="jean-pierre.gif")
+    item = canevas.create_image(600, 500, image = photo)
 
     
 
@@ -61,5 +62,5 @@ def createWindow():
     buttonBegin = Button(w, text = 'Nouvelle partie', command = '')
     buttonBegin.grid(row = 1, column = 1)
     buttonBegin.configure(font = 20)
-    
-    w.mainloop()   
+
+    return w, canevas
