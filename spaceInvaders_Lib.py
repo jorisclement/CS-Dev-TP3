@@ -20,22 +20,31 @@ TODO -
 #Importation des bibliothéques
 from tkinter import Tk ,Label,Button,Canvas,PhotoImage
 
-#Fonctions:
+#Classes:
+class alien:
+    def __init__(self,hp,position,canevas):
+        self.hp=hp
+        self.position=position
+        self.canevas = canevas
+
+    def affichageAlien (self):
+        self.alien = self.canevas.create_rectangle(600,500,200,300)
+        print("wow")
 
 
 
-
-def createWindow ():
+## Fonctions graphiques ##
+def createWindow():
     w=Tk()
     w.geometry('2400x1000')
     w.title('Space Invaders')
 
-    Canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
-    Canevas.grid(row = 1, column = 0)
+    canevas = Canvas(w, width = 1200, height = 650,  bg ='white')
+    canevas.grid(row = 1, column = 0)
     photo=PhotoImage(file="jean-pierre.gif")
-    item = Canevas.create_image(600, 500,image = photo)
-       
+    item = canevas.create_image(600, 500,image = photo)
 
+    
 
     score = Label(w, text = 'score :', fg = 'black')
     score.grid(row = 0, column = 0, sticky = 'nw')
