@@ -23,13 +23,17 @@ from tkinter import PhotoImage
 
 
 ## Variables globales ##
-
+t = 20
+dx = 0
+dy = 5   # Nombre de pixels dont on déplacera les aliens toutes les t ms
 
 ## Programme principal ##
 
 # Affichage du jeu #
-alien = alien(12, 78)
-alien.affichageAlien()
+alien = alien(dx, dy, t)
+alien.moveAlien()
 alien.createWindow()
+
+
 
 
