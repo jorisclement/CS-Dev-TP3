@@ -18,8 +18,8 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import alien
-from tkinter import PhotoImage
+from spaceInvaders_Lib import Window
+
 
 
 ## Variables globales ##
@@ -30,10 +30,8 @@ dy = 5   # Nombre de pixels dont on déplacera les aliens toutes les t ms
 ## Programme principal ##
 
 # Affichage du jeu #
-alien = alien(dx, dy, t)
-alien.moveAlien()
-alien.createWindow()
-
+w = Window()
+w.createWindow()
 
 
 

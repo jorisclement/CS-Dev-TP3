@@ -22,47 +22,34 @@ from tkinter import Tk ,Label, Button, Canvas, PhotoImage
 
 
 ## Classes ##
-class alien:
-    def __init__(self, dx, dy, t):
-        self.dx = dx
-        self.dy = dy
-        self.t = t
-
-        self.w = Tk()
-        self.canevas = Canvas(self.w, width = 1200, height = 650,  bg ='white')
-        self.alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red", tags = "A")
-
-
-    def moveAlien(self):
-        self.canevas.move(self.alien1, self.dx, self.dy)        
-        self.w.after(self.t, self.moveAlien)
-
-
-    def createWindow(self):       
+class Window:
+    def createWindow(self):
+        self.w = Tk()       
         self.w.geometry('2400x1000')
         self.w.title('Space Invaders')
        
+        self.canevas = Canvas(self.w, width = 1200, height = 650,  bg ='white')
         self.canevas.grid(row = 1, column = 0)
-        photo = PhotoImage(file="jean-pierre.gif")
-        item = self.canevas.create_image(600, 500, image = photo, tags = "B")
-        self.canevas.tag_raise("A")     # Ces deux lignes gèrent la position en profondeur des différents élèments du
-        self.canevas.tag_lower("B")     # Canvas  
+        self.canevas = Canvas(self.w, width = 1200, height = 650,  bg ='white')
+        self.photo = PhotoImage(file = "jean-pierre.gif")
+        self.canevas.create_image(600, 500, image = self.photo)
+            
 
-        score = Label(self.w, text = 'score :', fg = 'black')
-        score.grid(row = 0, column = 0, sticky = 'nw')
-        score.configure(font = 20)
+        self.score = Label(self.w, text = 'score :', fg = 'black')
+        self.score.grid(row = 0, column = 0, sticky = 'nw')
+        self.score.configure(font = 20)
 
-        labelLives = Label(self.w, text = 'Vie restantes: 3', fg = 'black')
-        labelLives.grid(row = 0, column = 0, sticky = 'ne')
-        labelLives.configure(font = 20)
+        self.labelLives = Label(self.w, text = 'Vie restantes: 3', fg = 'black')
+        self.labelLives.grid(row = 0, column = 0, sticky = 'ne')
+        self.labelLives.configure(font = 20)
 
-        buttonLeave = Button(self.w, text = 'Quitter', command = self.w.destroy)
-        buttonLeave.grid(row = 1, column = 1, sticky = 's')
-        buttonLeave.configure(font = 20)
+        self.buttonLeave = Button(self.w, text = 'Quitter', command = self.w.destroy)
+        self.buttonLeave.grid(row = 1, column = 1, sticky = 's')
+        self.buttonLeave.configure(font = 20)
 
-        buttonBegin = Button(self.w, text = 'Nouvelle partie', command = '')
-        buttonBegin.grid(row = 1, column = 1)
-        buttonBegin.configure(font = 20)
+        self.buttonBegin = Button(self.w, text = 'Nouvelle partie', command = '')
+        self.buttonBegin.grid(row = 1, column = 1)
+        self.buttonBegin.configure(font = 20)
 
         self.w.mainloop()
 
