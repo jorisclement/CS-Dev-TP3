@@ -18,20 +18,22 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import Window
+from spaceInvaders_Lib import Window, Draw, Move
 
 
 
 ## Variables globales ##
-t = 20
 dx = 0
 dy = 5   # Nombre de pixels dont on déplacera les aliens toutes les t ms
+t = 20
 
 ## Programme principal ##
 
 # Affichage du jeu #
-w = Window()
-w.createWindow()
+
+move = Move(dx, dy, t)
+move.moveAlien()
+move.Mainloop()
 
 
 
