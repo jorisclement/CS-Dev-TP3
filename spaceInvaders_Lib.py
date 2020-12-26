@@ -11,8 +11,8 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -Faire bouger "l'alien"
-     -Tout le reste
+TODO -Gérer la sortie d'écran
+     -Rajouter le vaisseau 
      -
      -
 """
@@ -50,7 +50,8 @@ class Window:
         self.buttonBegin = Button(self.w, text = 'Nouvelle partie', command = '')
         self.buttonBegin.grid(row = 1, column = 1)
         self.buttonBegin.configure(font = 20)
-        
+
+
 
 class Draw(Window):
     def __init__(self):

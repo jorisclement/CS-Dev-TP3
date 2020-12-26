@@ -18,7 +18,7 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import Window, Draw, Move
+from spaceInvaders_Lib import Move
 
 
 
