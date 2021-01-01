@@ -18,7 +18,7 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import Move
+from spaceInvaders_Lib import Move, Draw
 
 
 
@@ -32,7 +32,8 @@ t = 20
 # Affichage du jeu #
 
 move = Move(dx, dy, t)
-move.moveAlien()
+move.moveAliens()
+move.moveSpaceships()
 move.Mainloop()
 
 

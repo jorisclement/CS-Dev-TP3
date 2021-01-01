@@ -58,23 +58,35 @@ class Draw(Window):
         Window.__init__(self)
         
     
-    def drawAlien(self):
-        self.alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red", tags = "A")
+    def drawAliens(self):
+        alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red", tags = "A")
         
-        return self.alien1
+        return alien1
 
+
+    def drawSpaceships(self):
+        spaceships = self.canevas.create_rectangle(560, 580, 640, 650, fill = "green", tags = "A")
+
+        return spaceships
 
 class Move(Draw):
     def __init__(self, dx, dy, t):
         Draw.__init__(self)
-        self.alien1 = Draw.drawAlien(self)
+        self.alien1 = Draw.drawAliens(self)
+        self.spaceships = Draw.drawSpaceships(self)
         self.dx = dx
         self.dy = dy
         self.t = t
 
-    def moveAlien(self):
+    def moveAliens(self):
         self.canevas.move(self.alien1, self.dx, self.dy)        
-        self.w.after(self.t, self.moveAlien)
+        self.w.after(self.t, self.moveAliens)
+
+
+    def moveSpaceships(self):
+        self.canevas.move(self.spaceships, self.dy, self.dx)
+        self.w.after(self.t, self.moveSpaceships)
+
     
     def Mainloop(self):
         self.w.mainloop()
