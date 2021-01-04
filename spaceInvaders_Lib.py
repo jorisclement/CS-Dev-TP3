@@ -84,7 +84,7 @@ class Move(Draw):
 
 
     def moveSpaceships(self):
-        self.canevas.move(self.spaceships, self.dy, self.dx)
+        self.canevas.move(self.spaceships, self.dx, self.dy)
         self.w.after(self.t, self.moveSpaceships)
 
     
