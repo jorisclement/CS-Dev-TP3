@@ -98,15 +98,37 @@ class Move(Draw):
         self.w.after(self.t, self.moveAliens)
 
     def right (self,event):
-        self.canevas.move(self.spaceships,20,0)
+        if self.canevas.coords(self.spaceships)[2] < 1200 : 
+            self.canevas.move(self.spaceships,20,0)
+        else :
+            self.canevas.move(self.spaceships,0,0)
 
     def left (self,event):
-        self.canevas.move(self.spaceships,-20,0)
-
+        if self.canevas.coords(self.spaceships)[0] > 0:
+            self.canevas.move(self.spaceships,-20,0)
+        else :
+            self.canevas.move(self.spaceships,0,0)
 
     def moveSpaceships(self):
         self.canevas.bind_all('<Right>', self.right)
         self.canevas.bind_all('<Left>', self.left)
+         
+
+    def fire(self,event):
+        self.bulet = self.canevas.create_oval(560, 530, 640, 600, fill = "green", tags = "A")
+        self.canevas.move(self.bulet,0,-40)
+        self.w.after(self.t, self.moveBulet2)
+
+    def moveBulet2 (self):
+        self.canevas.move(self.bulet,0,-40)
+        self.w.after(self.t, self.moveBulet2)
+
+
+
+
+
+    def moveBulet (self):
+        self.canevas.bind_all('<space>', self.fire)
 
 
        
