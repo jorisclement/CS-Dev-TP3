@@ -97,12 +97,30 @@ class Move(Draw):
         self.canevas.move(self.alien1, self.dx, self.dy)        
         self.w.after(self.t, self.moveAliens)
 
+    def right (self,event):
+        self.canevas.move(self.spaceships,20,0)
+
+    def left (self,event):
+        self.canevas.move(self.spaceships,-20,0)
+
 
     def moveSpaceships(self):
-        self.canevas.move(self.spaceships, self.dx, self.dy)
-        self.w.after(self.t, self.moveSpaceships)
+        self.canevas.bind_all('<Right>', self.right)
+        self.canevas.bind_all('<Left>', self.left)
+
+
+       
+
+           
+    
+
+
+   
+    
+
 
     
     def Mainloop(self):
         self.w.mainloop()
+    
     
