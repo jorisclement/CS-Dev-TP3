@@ -25,9 +25,10 @@ from spaceInvaders_Lib import Move, Draw
 ## Variables globales ##
 dx = 5
 dy = 0  # Nombre de pixels dont on déplacera les aliens toutes les t ms
-t = 200
+t = 20
 
 ## Programme principal ##
+
 
 # Affichage du jeu #
 move = Move(dx, dy, t)
