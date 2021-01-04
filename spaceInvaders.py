@@ -30,7 +30,6 @@ t = 200
 ## Programme principal ##
 
 # Affichage du jeu #
-
 move = Move(dx, dy, t)
 move.moveAliens()
 move.moveSpaceships()
