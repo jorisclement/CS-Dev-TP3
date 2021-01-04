@@ -13,8 +13,8 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 """
 TODO -Créer un condition de destruction des balles ( sortie d'écran et contact avec un alien)
      -Régler l'accélération des balles (boucle infinie) et créer une liste de balles pour ne pas ecraser la 1er balle lors du 2ieme tire
-     -
-     -
+     -tir des aliens
+     -gèrer les vies
 """
 
 ## Importation des bibliothéques ##
