@@ -115,16 +115,12 @@ class Move(Draw):
          
 
     def fire(self,event):
-        self.bulet = self.canevas.create_oval(560, 530, 640, 600, fill = "green", tags = "A")
-        self.canevas.move(self.bulet,0,-40)
+        self.bulet = self.canevas.create_oval(self.canevas.coords(self.spaceships)[0], self.canevas.coords(self.spaceships)[1],self.canevas.coords(self.spaceships)[2],self.canevas.coords(self.spaceships)[3], fill = "green", tags = "A")
         self.w.after(self.t, self.moveBulet2)
 
     def moveBulet2 (self):
-        self.canevas.move(self.bulet,0,-40)
+        self.canevas.move(self.bulet,0,-20)
         self.w.after(self.t, self.moveBulet2)
-
-
-
 
 
     def moveBulet (self):
