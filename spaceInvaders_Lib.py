@@ -11,10 +11,10 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -Gérer la sortie d'écran
-     -Rajouter le vaisseau 
+TODO -
      -
-     -
+     -tir des aliens
+     -gèrer les vies
 """
 
 ## Importation des bibliothéques ##
