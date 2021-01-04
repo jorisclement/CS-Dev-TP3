@@ -60,8 +60,9 @@ class Draw(Window):
     
     def drawAliens(self):
         alien1 = self.canevas.create_rectangle(30, 10, 120, 80, fill = "red", tags = "A")
-        
-        return alien1
+        #alien2 = self.canevas.create_oval(170, 10, 260, 80, fill = "yellow", tags = "A")
+
+        return alien1, #alien2
 
 
     def drawSpaceships(self):
@@ -72,13 +73,27 @@ class Draw(Window):
 class Move(Draw):
     def __init__(self, dx, dy, t):
         Draw.__init__(self)
-        self.alien1 = Draw.drawAliens(self)
+        self.alien1 = Draw.drawAliens(self)[0]
         self.spaceships = Draw.drawSpaceships(self)
         self.dx = dx
         self.dy = dy
         self.t = t
+        self.c = 0
 
     def moveAliens(self):
+        if self.canevas.coords(self.alien1)[2] > 1200 or self.canevas.coords(self.alien1)[0] < 0:
+            self.dx = -self.dx
+            self.c += 1
+
+        elif self.c == 2:
+            self.canevas.move(self.alien1, 0, 50)
+            self.c = 0
+
+        elif self.canevas.coords(self.alien1)[3] > 600:
+            self.canevas.delete(self.spaceships)
+            self.dx = 0
+            self.dy = 0
+
         self.canevas.move(self.alien1, self.dx, self.dy)        
         self.w.after(self.t, self.moveAliens)
 
