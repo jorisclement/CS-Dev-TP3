@@ -25,7 +25,7 @@ from spaceInvaders_Lib import Move, Draw
 ## Variables globales ##
 dx = 5
 dy = 0  # Nombre de pixels dont on déplacera les aliens toutes les t ms
-t = 20
+t = 200
 
 ## Programme principal ##
 
