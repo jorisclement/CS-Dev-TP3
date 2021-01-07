@@ -137,7 +137,7 @@ class Move(Draw):
        # while self.canevas.coords(self.bulet)[0] 
         self.canevas.move(self.bulet,0,-20)
         self.w.after(self.t, self.moveBulet2)
-
+        
 
     def moveBulet (self):
         self.canevas.bind_all('<space>', self.fire)
