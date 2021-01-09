@@ -18,7 +18,7 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import Move, Draw
+from spaceInvaders_Lib import Game
 
 
 
@@ -31,12 +31,9 @@ t = 20
 
 
 # Affichage du jeu #
-move = Move(dx, dy, t)
-move.moveAliens()
-move.moveSpaceships()
-move.moveBulet2()
-move.moveBulet() 
-move.Mainloop()
+game = Game(dx, dy, t)
+game.hitBox()
+game.Mainloop()
 
 
 

@@ -11,7 +11,7 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -mettre un cool down sur les tirs (on peut trop spammer je pense)
+TODO -régler le pb du dépalcement des aliens lorsque des aliens de la dernière ligne disparaissent
      -faire le score
      -tir des aliens
      -gèrer les vies
@@ -53,12 +53,16 @@ class Window:
         self.buttonBegin.grid(row = 1, column = 1)
         self.buttonBegin.configure(font = 20)
 
+    
+    def Mainloop(self):
+        self.w.mainloop()
+
 
 
 class Draw(Window):
     def __init__(self):
         Window.__init__(self)
-        
+        self.bullets = [self.canevas.create_line(1249, 649, 1250, 650)]
     
     def drawAliens(self):
         line1 = []
@@ -77,32 +81,35 @@ class Draw(Window):
         return line1, line2, line3, line4, line5
 
     
-        
-
     def drawSpaceships(self):
         self.spaceships = self.canevas.create_rectangle(560, 580, 640, 650, fill = "green", tags = "A")
 
         return self.spaceships
 
 
-    def createBulet(self, event):
-        self.canevas.create_line((self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 580, (self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 620, fill = "green", width = 10,tags = "C")
-    
+    def createBulets(self, event):
+        bullet = self.canevas.create_line((self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 580, (self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 620, fill = "green", width = 10,tags = "C")
+        self.bullets.append(bullet)
+        
+
+        return self.bullets
 
 class Move(Draw):
     def __init__(self, dx, dy, t):
         Draw.__init__(self)
-        self.line5 = Draw.drawAliens(self)[4]
+        (self.line1, self.line2, self.line3, self.line4, self.line5) = Draw.drawAliens(self)
+        self.Aliens = self.line1 + self.line2 + self.line3 + self.line4 + self.line5
+
         self.spaceships = Draw.drawSpaceships(self)
-        self.bullets = []
+        
         self.dx = dx
         self.dy = dy
         self.t = t
         self.c = 0
-
+        
 
     def moveAliens(self):
-        if self.canevas.coords(self.line5[-1])[2] > 1200 or self.canevas.coords(self.line5[0])[0] < 0:
+        if self.canevas.coords(self.Aliens[-1])[2] > 1200 or self.canevas.coords(self.Aliens[0])[0] < 0:
             self.dx = -self.dx
             self.c += 1
 
@@ -110,7 +117,7 @@ class Move(Draw):
             self.canevas.move("B", 0, 50)
             self.c = 0
 
-        elif self.canevas.coords(self.line5[1])[3] > 580:
+        elif self.canevas.coords(self.Aliens[-1])[3] > 580:
             self.canevas.delete(self.spaceships)
             self.dx = 0
             self.dy = 0
@@ -124,7 +131,7 @@ class Move(Draw):
             self.canevas.move(self.spaceships,20,0)
         else :
             self.canevas.move(self.spaceships,0,0)
-
+        
     
     def left (self,event):
         if self.canevas.coords(self.spaceships)[0] > 0:
@@ -144,10 +151,33 @@ class Move(Draw):
         
 
     def moveBulet(self):
-        self.canevas.bind_all('<space>', self.createBulet)
+        self.canevas.bind_all('<space>', self.createBulets)
+
+    
+
+class Game(Move):    
+    def __init__(self, dx, dy, t):
+        Move.__init__(self, dx, dy, t)
+        Move.moveAliens(self)
+        Move.moveSpaceships(self)
+        Move.moveBulet2(self)
+        Move.moveBulet(self)
+    
+
+    def hitBox(self):
+        if self.canevas.coords(self.bullets[-1])[1] < 0:
+                self.canevas.delete(self.bullets[-1])
+                self.bullets.pop(-1)
+
+        for i in self.Aliens:
+            if self.canevas.coords(self.bullets[-1])[1] < self.canevas.coords(i)[3]   and self.canevas.coords(self.bullets[-1])[3] > self.canevas.coords(i)[1]   and self.canevas.coords(self.bullets[-1])[0] < self.canevas.coords(i)[2]   and self.canevas.coords(self.bullets[-1])[2] > self.canevas.coords(i)[0]:
+                self.Aliens.remove(i)
+                self.canevas.delete(i)
+                #print(self.Aliens.index(self.Aliens[i]))
+
+                
+                self.canevas.delete(self.bullets[-1])
+                self.bullets.pop(-1)
+                
         
-    
-    def Mainloop(self):
-        self.w.mainloop()
-    
-    
+        self.w.after(self.t, self.hitBox)
