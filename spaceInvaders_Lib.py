@@ -98,8 +98,8 @@ class Move(Draw):
     def __init__(self, dx, dy, t):
         Draw.__init__(self)
         (self.line1, self.line2, self.line3, self.line4, self.line5) = Draw.drawAliens(self)
-        self.Aliens = self.line1 + self.line2 + self.line3 + self.line4 + self.line5
-
+        self.Aliens = [self.line1 ,self.line2 ,self.line3 ,self.line4 ,self.line5]
+        
         self.spaceships = Draw.drawSpaceships(self)
         
         self.dx = dx
@@ -109,15 +109,21 @@ class Move(Draw):
         
 
     def moveAliens(self):
-        if self.canevas.coords(self.Aliens[-1])[2] > 1200 or self.canevas.coords(self.Aliens[0])[0] < 0:
+        
+        if self.canevas.coords(self.line1[-1])[2] > 1200  or self.canevas.coords(self.line2[-1])[2] > 1200 or self.canevas.coords(self.line3[-1])[2] > 1200  or self.canevas.coords(self.line4[-1])[2] > 1200  or self.canevas.coords(self.line5[-1])[2] > 1200:
+                
             self.dx = -self.dx
             self.c += 1
 
-        elif self.c == 2:
+        elif self.canevas.coords(self.line1[0])[0] < 0  or self.canevas.coords(self.line2[0])[0] < 0  or self.canevas.coords(self.line3[0])[0] < 0 or self.canevas.coords(self.line4[0])[0] < 0  or self.canevas.coords(self.line4[0])[0] < 0: 
+            self.dx = -self.dx
+            self.c += 1      
+
+        if self.c == 2:
             self.canevas.move("B", 0, 50)
             self.c = 0
 
-        elif self.canevas.coords(self.Aliens[-1])[3] > 580:
+        elif self.canevas.coords(self.line5[-1])[3] > 580:
             self.canevas.delete(self.spaceships)
             self.dx = 0
             self.dy = 0
@@ -168,16 +174,15 @@ class Game(Move):
         if self.canevas.coords(self.bullets[-1])[1] < 0:
                 self.canevas.delete(self.bullets[-1])
                 self.bullets.pop(-1)
-
-        for i in self.Aliens:
-            if self.canevas.coords(self.bullets[-1])[1] < self.canevas.coords(i)[3]   and self.canevas.coords(self.bullets[-1])[3] > self.canevas.coords(i)[1]   and self.canevas.coords(self.bullets[-1])[0] < self.canevas.coords(i)[2]   and self.canevas.coords(self.bullets[-1])[2] > self.canevas.coords(i)[0]:
-                self.Aliens.remove(i)
-                self.canevas.delete(i)
-                #print(self.Aliens.index(self.Aliens[i]))
-
+        
+        for line in self.Aliens:
+            for alien in line:
+                if self.canevas.coords(self.bullets[-1])[1] < self.canevas.coords(alien)[3]   and self.canevas.coords(self.bullets[-1])[3] > self.canevas.coords(alien)[1]   and self.canevas.coords(self.bullets[-1])[0] < self.canevas.coords(alien)[2]   and self.canevas.coords(self.bullets[-1])[2] > self.canevas.coords(alien)[0]:
+                    line.remove(alien)
+                    self.canevas.delete(alien)
                 
-                self.canevas.delete(self.bullets[-1])
-                self.bullets.pop(-1)
+                    self.canevas.delete(self.bullets[-1])
+                    self.bullets.pop(-1)
                 
         
         self.w.after(self.t, self.hitBox)
