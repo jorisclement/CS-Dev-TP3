@@ -176,7 +176,7 @@ class Move(Draw):
             if self.canevas.coords(alien)[3] > self.canevas.coords(self.spaceships)[1]:
                 self.compteur_edf = 1
 
-        
+        print(self.compteur_edf)
         self.canevas.move("B", self.dx, self.dy)        
         self.w.after(self.t, self.moveAliens)
 
@@ -212,6 +212,7 @@ class Move(Draw):
     
     def moveBuletAliens(self):
         self.canevas.move("E", 0, 20)
+
         self.w.after(self.t, self.moveBuletAliens)
     
 
