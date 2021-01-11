@@ -24,12 +24,14 @@ from random import randint
 
 ## Classes ##
 class Window:
-    def __init__(self):
+    def __init__(self, hi):
+        self.Hi = hi
+
         self.w = Tk()     
-        self.w.geometry('2400x1000')
+        self.w.geometry('2400x1050')
         self.w.title('Space Invaders')
         
-        self.canevas = Canvas(self.w, width = 1200, height = 650,  bg ='white')  
+        self.canevas = Canvas(self.w, width = 1200, height = self.Hi,  bg ='white')  
         self.canevas.grid(row = 1, column = 0)
         self.photo = PhotoImage(file="jean-pierre.gif")
         self.item = self.canevas.create_image(600, 500, image = self.photo, tags = "D")
@@ -63,8 +65,8 @@ class Window:
 
 
 class Draw(Window):
-    def __init__(self):
-        Window.__init__(self)
+    def __init__(self, hi):
+        Window.__init__(self, hi)
         self.compteur_edf = 0
         self.bulletsShips = [self.canevas.create_line(1249, 649, 1250, 650)]
         self.bulletsAlien = [self.canevas.create_line(1249, 649, 1250, 650)]
@@ -90,7 +92,7 @@ class Draw(Window):
 
     
     def drawSpaceships(self):
-        self.spaceships = self.canevas.create_rectangle(560, 580, 640, 650, fill = "green", tags = "A")
+        self.spaceships = self.canevas.create_rectangle(560, 930, 640, 1000, fill = "green", tags = "A")
 
         return self.spaceships
 
@@ -100,7 +102,7 @@ class Draw(Window):
             self.bulletsShips = self.bulletsShips
             
         else:
-            bullet = self.canevas.create_line((self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 580, (self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 620, fill = "green", width = 10,tags = "C")
+            bullet = self.canevas.create_line((self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, self.canevas.coords(self.spaceships)[1], (self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, self.canevas.coords(self.spaceships)[1] + 40, fill = "green", width = 10,tags = "C")
             self.bulletsShips.append(bullet)
 
 
@@ -115,12 +117,30 @@ class Draw(Window):
         
 
 
+
+
+    def drawBarricades(self):
+        Barricade1 = []
+        Barricade2 = []
+        Barricade3 = []
+
+        for line in range(2):
+            for col in range(6):
+                Barricade1.append(self.canevas.create_rectangle(50 + col*50, self.Hi - 200  + line*50, 100 + col*50, self.Hi - 150 + line*50, fill = "grey", outline = "black"))
+                Barricade2.append(self.canevas.create_rectangle(450 + col*50, self.Hi - 200  + line*50, 500 + col*50, self.Hi - 150 + line*50, fill = "grey", outline = "black"))
+                Barricade3.append(self.canevas.create_rectangle(850 + col*50, self.Hi - 200  + line*50, 900 + col*50, self.Hi - 150 + line*50, fill = "grey", outline = "black"))
+
+        return Barricade1, Barricade2, Barricade3
+
 class Move(Draw):
-    def __init__(self, dx, dy, t):
-        Draw.__init__(self)
+    def __init__(self, hi, dx, dy, t):
+        Draw.__init__(self, hi)
         (self.line1, self.line2, self.line3, self.line4, self.line5) = Draw.drawAliens(self)
         self.spaceships = Draw.drawSpaceships(self)
+       
         Draw.createBuletsAliens(self)
+        (self.Barricades1, self.Barricades2, self.Barricades3) = Draw.drawBarricades(self)
+        self.Barricades = self.Barricades1 + self.Barricades2 + self.Barricades3
         
         self.dx = dx
         self.dy = dy
@@ -151,14 +171,12 @@ class Move(Draw):
                 self.c = 0
 
             for alien in self.Aliens2:
-                if self.canevas.coords(alien)[3] > 580:
-                    self.canevas.delete(self.spaceships)
-                    self.dx = 0
-                    self.dy = 0
+                if self.canevas.coords(alien)[3] > self.canevas.coords(self.spaceships)[1]:
+                    self.compteur_edf = 1
 
-            
-            self.canevas.move("B", self.dx, self.dy)        
-            self.w.after(self.t, self.moveAliens)
+        
+        self.canevas.move("B", self.dx, self.dy)        
+        self.w.after(self.t, self.moveAliens)
 
     
     def right (self,event):
@@ -176,8 +194,12 @@ class Move(Draw):
 
 
     def moveSpaceships(self):
-        self.canevas.bind_all('<Right>', self.right)
-        self.canevas.bind_all('<Left>', self.left)
+        if self.compteur_edf == 1:
+            return -1
+        
+        else:
+            self.canevas.bind_all('<Right>', self.right)
+            self.canevas.bind_all('<Left>', self.left)
         
         
     def moveBulet2(self):
@@ -190,21 +212,25 @@ class Move(Draw):
 
 
     def moveBulet(self):
-        self.canevas.bind_all('<space>', self.createBuletsShips)
+        if self.compteur_edf == 1:
+            return -1
+        
+        else:
+            self.canevas.bind_all('<space>', self.createBuletsShips)
 
     
     def moveBuletAliens(self):
         if self.compteur_edf == 1:
             return -1
         else:
-            self.canevas.move("E", 0, 6)
+            self.canevas.move("E", 0, 20)
             self.w.after(self.t, self.moveBuletAliens)
     
 
 
 class Game(Move):    
-    def __init__(self, dx, dy, t):
-        Move.__init__(self, dx, dy, t)
+    def __init__(self, hi, dx, dy, t):
+        Move.__init__(self, hi, dx, dy, t)
         Move.moveAliens(self)
         Move.moveSpaceships(self)
         Move.moveBulet2(self)
@@ -216,7 +242,11 @@ class Game(Move):
 
     def hitBox(self):
         if self.compteur_edf == 1:
+            self.dx = 0
+            self.dy = 0
+            self.canevas.delete(self.spaceships)
             return -1
+        
         else:
             if self.canevas.coords(self.bulletsShips[-1])[1] < 0:
                     self.canevas.delete(self.bulletsShips[-1])
@@ -239,10 +269,7 @@ class Game(Move):
             self.printScore = "score :",self.scoring
             self.score.configure( text = self.printScore)
 
-
-
             for bullet in self.bulletsAlien:
-                
                 if self.canevas.coords(bullet)[3] > self.canevas.coords(self.spaceships)[1]   and self.canevas.coords(bullet)[1] < self.canevas.coords(self.spaceships)[3]   and self.canevas.coords(bullet)[0] < self.canevas.coords(self.spaceships)[2]   and self.canevas.coords(bullet)[2] > self.canevas.coords(self.spaceships)[0]:
                     self.lives.append( self.lives[-1] - 1)
                     self.printLives = "vie restantes: ",self.lives[-1]
@@ -250,15 +277,21 @@ class Game(Move):
                     self.canevas.delete(self.bulletsAlien[-1])
                     self.bulletsAlien.pop(-1)
 
-        #def defeat(self)
+            if len(self.Barricades) != 0:
+                for barricade in self.Barricades:
+                    if self.canevas.coords(self.bulletsAlien[-1])[3] > self.canevas.coords(barricade)[1]   and self.canevas.coords(self.bulletsAlien[-1])[1] < self.canevas.coords(barricade)[3]   and self.canevas.coords(self.bulletsAlien[-1])[0] < self.canevas.coords(barricade)[2]   and self.canevas.coords(self.bulletsAlien[-1])[2] > self.canevas.coords(barricade)[0]:
+                        self.canevas.delete(barricade)
+                        self.Barricades.remove(barricade)
+
+                        self.canevas.delete(self.bulletsAlien[-1])
+                        self.bulletsAlien.pop(-1)
+
+            #def defeat(self)
             if self.lives[-1] == 0:
-                self.dx = 0
-                self.dy = 0
-                self.canevas.delete(self.spaceships)
                 self.compteur_edf = 1
 
-            
             self.w.after(self.t, self.hitBox)
+    
 
        
 
