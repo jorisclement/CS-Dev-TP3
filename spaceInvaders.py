@@ -27,6 +27,8 @@ Hi = 1000   # Hauteur en pixels du canevas
 dx = 3
 dy = 0      # Nombre de pixels dont on déplacera les aliens toutes les t ms
 t = 20
+dx = 3    # Nombre de pixels dont on déplacera les aliens toutes les t ms
+dy = 0  
 
 ## Programme principal ##
 
