@@ -35,7 +35,6 @@ t = 20
 
 game = Game(dx, dy, t)
 game.hitBox()
-
 game.Mainloop()
 
 

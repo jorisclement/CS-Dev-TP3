@@ -65,6 +65,7 @@ class Window:
 class Draw(Window):
     def __init__(self):
         Window.__init__(self)
+        self.compteur_edf = 0
         self.bulletsShips = [self.canevas.create_line(1249, 649, 1250, 650)]
         self.bulletsAlien = [self.canevas.create_line(1249, 649, 1250, 650)]
     
@@ -104,11 +105,14 @@ class Draw(Window):
 
 
     def createBuletsAliens(self):
-        r = randint(0, 40)
-        self.bulletAlien = self.canevas.create_line((self.canevas.coords(self.Aliens2[r])[0] + self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3], (self.canevas.coords(self.Aliens2[r])[0]+self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3] + 40, fill = "black", tags = "E", width = 10)
-        self.bulletsAlien.append(self.bulletAlien)
-        self.w.after(4000, self.createBuletsAliens)
-      
+        r = randint(0, len(self.Aliens2) - 1)
+        if self.compteur_edf == 1:
+            return -1
+        else:    
+            self.bulletAlien = self.canevas.create_line((self.canevas.coords(self.Aliens2[r])[0] + self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3], (self.canevas.coords(self.Aliens2[r])[0]+self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3] + 40, fill = "black", tags = "E", width = 10)
+            self.bulletsAlien.append(self.bulletAlien)
+            self.w.after(4000, self.createBuletsAliens)
+        
 
 
 class Move(Draw):
@@ -232,7 +236,9 @@ class Game(Move):
         if self.lives[-1] == 0:
             self.dx = 0
             self.dy = 0
-            self.bulletAlien = 0    
+            self.canevas.delete(self.spaceships)
+            self.compteur_edf = 1
+
         
         self.w.after(self.t, self.hitBox)
 
