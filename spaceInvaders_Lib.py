@@ -130,32 +130,35 @@ class Move(Draw):
         
 
     def moveAliens(self):
-        for line in self.Aliens:
-            if self.canevas.coords(line[-1])[2] > 1200 and self.bounce == 0:     
-                self.dx = -self.dx
-                if self.dx < 0:
-                    self.bounce = 1
+        if self.compteur_edf == 1:
+            return -1
+        else:
+            for line in self.Aliens:
+                if self.canevas.coords(line[-1])[2] > 1200 and self.bounce == 0:     
+                    self.dx = -self.dx
+                    if self.dx < 0:
+                        self.bounce = 1
 
-            elif self.canevas.coords(line[0])[0] < 0 and self.bounce == 1:   
-                self.dx = -self.dx
-                self.c = 2     
-                if self.dx > 0:
-                    self.bounce = 0
+                elif self.canevas.coords(line[0])[0] < 0 and self.bounce == 1:   
+                    self.dx = -self.dx
+                    self.c = 2     
+                    if self.dx > 0:
+                        self.bounce = 0
 
 
-        if self.c == 2:
-            self.canevas.move("B", 0, 50)
-            self.c = 0
+            if self.c == 2:
+                self.canevas.move("B", 0, 50)
+                self.c = 0
 
-        for alien in self.Aliens2:
-            if self.canevas.coords(alien)[3] > 580:
-                self.canevas.delete(self.spaceships)
-                self.dx = 0
-                self.dy = 0
+            for alien in self.Aliens2:
+                if self.canevas.coords(alien)[3] > 580:
+                    self.canevas.delete(self.spaceships)
+                    self.dx = 0
+                    self.dy = 0
 
-        
-        self.canevas.move("B", self.dx, self.dy)        
-        self.w.after(self.t, self.moveAliens)
+            
+            self.canevas.move("B", self.dx, self.dy)        
+            self.w.after(self.t, self.moveAliens)
 
     
     def right (self,event):
@@ -178,9 +181,12 @@ class Move(Draw):
         
         
     def moveBulet2(self):
-        self.canevas.move("C", 0, -20)
-        self.w.after(self.t, self.moveBulet2)
-        
+        if self.compteur_edf == 1:
+            return -1
+        else:
+            self.canevas.move("C", 0, -20)
+            self.w.after(self.t, self.moveBulet2)
+            
 
 
     def moveBulet(self):
@@ -188,8 +194,11 @@ class Move(Draw):
 
     
     def moveBuletAliens(self):
-        self.canevas.move("E", 0, 6)
-        self.w.after(self.t, self.moveBuletAliens)
+        if self.compteur_edf == 1:
+            return -1
+        else:
+            self.canevas.move("E", 0, 6)
+            self.w.after(self.t, self.moveBuletAliens)
     
 
 
@@ -206,48 +215,50 @@ class Game(Move):
  
 
     def hitBox(self):
-
-        if self.canevas.coords(self.bulletsShips[-1])[1] < 0:
-                self.canevas.delete(self.bulletsShips[-1])
-                self.bulletsShips.pop(-1)
-        
-        for line in self.Aliens:
-            for alien in line:
-                if self.canevas.coords(self.bulletsShips[-1])[1] < self.canevas.coords(alien)[3]   and self.canevas.coords(self.bulletsShips[-1])[3] > self.canevas.coords(alien)[1]   and self.canevas.coords(self.bulletsShips[-1])[0] < self.canevas.coords(alien)[2]   and self.canevas.coords(self.bulletsShips[-1])[2] > self.canevas.coords(alien)[0]:
-                    line.remove(alien)
-                    if len(line) == 0:
-                        del self.Aliens[self.Aliens.index(line)]
-                        
-                    self.Aliens2.remove(alien)
-                    self.canevas.delete(alien)
-                    self.scoring = self.scoring + 100
-    
+        if self.compteur_edf == 1:
+            return -1
+        else:
+            if self.canevas.coords(self.bulletsShips[-1])[1] < 0:
                     self.canevas.delete(self.bulletsShips[-1])
                     self.bulletsShips.pop(-1)
-        #def scoring (self):            
-        self.printScore = "score :",self.scoring
-        self.score.configure( text = self.printScore)
-
-
-
-        for bullet in self.bulletsAlien:
             
-            if self.canevas.coords(bullet)[3] > self.canevas.coords(self.spaceships)[1]   and self.canevas.coords(bullet)[1] < self.canevas.coords(self.spaceships)[3]   and self.canevas.coords(bullet)[0] < self.canevas.coords(self.spaceships)[2]   and self.canevas.coords(bullet)[2] > self.canevas.coords(self.spaceships)[0]:
-                self.lives.append( self.lives[-1] - 1)
-                self.printLives = "vie restantes: ",self.lives[-1]
-                self.labelLives.configure (text = self.printLives)
-                self.canevas.delete(self.bulletsAlien[-1])
-                self.bulletsAlien.pop(-1)
-
-    #def defeat(self)
-        if self.lives[-1] == 0:
-            self.dx = 0
-            self.dy = 0
-            self.canevas.delete(self.spaceships)
-            self.compteur_edf = 1
-
+            for line in self.Aliens:
+                for alien in line:
+                    if self.canevas.coords(self.bulletsShips[-1])[1] < self.canevas.coords(alien)[3]   and self.canevas.coords(self.bulletsShips[-1])[3] > self.canevas.coords(alien)[1]   and self.canevas.coords(self.bulletsShips[-1])[0] < self.canevas.coords(alien)[2]   and self.canevas.coords(self.bulletsShips[-1])[2] > self.canevas.coords(alien)[0]:
+                        line.remove(alien)
+                        if len(line) == 0:
+                            del self.Aliens[self.Aliens.index(line)]
+                            
+                        self.Aliens2.remove(alien)
+                        self.canevas.delete(alien)
+                        self.scoring = self.scoring + 100
         
-        self.w.after(self.t, self.hitBox)
+                        self.canevas.delete(self.bulletsShips[-1])
+                        self.bulletsShips.pop(-1)
+            #def scoring (self):            
+            self.printScore = "score :",self.scoring
+            self.score.configure( text = self.printScore)
+
+
+
+            for bullet in self.bulletsAlien:
+                
+                if self.canevas.coords(bullet)[3] > self.canevas.coords(self.spaceships)[1]   and self.canevas.coords(bullet)[1] < self.canevas.coords(self.spaceships)[3]   and self.canevas.coords(bullet)[0] < self.canevas.coords(self.spaceships)[2]   and self.canevas.coords(bullet)[2] > self.canevas.coords(self.spaceships)[0]:
+                    self.lives.append( self.lives[-1] - 1)
+                    self.printLives = "vie restantes: ",self.lives[-1]
+                    self.labelLives.configure (text = self.printLives)
+                    self.canevas.delete(self.bulletsAlien[-1])
+                    self.bulletsAlien.pop(-1)
+
+        #def defeat(self)
+            if self.lives[-1] == 0:
+                self.dx = 0
+                self.dy = 0
+                self.canevas.delete(self.spaceships)
+                self.compteur_edf = 1
+
+            
+            self.w.after(self.t, self.hitBox)
 
        
 
