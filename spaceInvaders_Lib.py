@@ -130,11 +130,6 @@ class Draw(Window):
                 Barricade2.append(self.canevas.create_rectangle(450 + col*50, self.Hi - 200  + line*50, 500 + col*50, self.Hi - 150 + line*50, fill = "grey", outline = "black"))
                 Barricade3.append(self.canevas.create_rectangle(850 + col*50, self.Hi - 200  + line*50, 900 + col*50, self.Hi - 150 + line*50, fill = "grey", outline = "black"))
 
-        
-        
-        #self.canevas.create_rectangle(50, self.Hi - 200, 350, self.Hi - 100, fill = "black")
-        #self.canevas.create_rectangle(450, self.Hi - 200, 750, self.Hi - 100, fill = "black")
-        #self.canevas.create_rectangle(850, self.Hi - 200, 1150, self.Hi - 100, fill = "black")
         return Barricade1, Barricade2, Barricade3
 
 class Move(Draw):
@@ -199,8 +194,12 @@ class Move(Draw):
 
 
     def moveSpaceships(self):
-        self.canevas.bind_all('<Right>', self.right)
-        self.canevas.bind_all('<Left>', self.left)
+        if self.compteur_edf == 1:
+            return -1
+        
+        else:
+            self.canevas.bind_all('<Right>', self.right)
+            self.canevas.bind_all('<Left>', self.left)
         
         
     def moveBulet2(self):
@@ -213,7 +212,11 @@ class Move(Draw):
 
 
     def moveBulet(self):
-        self.canevas.bind_all('<space>', self.createBuletsShips)
+        if self.compteur_edf == 1:
+            return -1
+        
+        else:
+            self.canevas.bind_all('<space>', self.createBuletsShips)
 
     
     def moveBuletAliens(self):
@@ -239,7 +242,11 @@ class Game(Move):
 
     def hitBox(self):
         if self.compteur_edf == 1:
+            self.dx = 0
+            self.dy = 0
+            self.canevas.delete(self.spaceships)
             return -1
+        
         else:
             if self.canevas.coords(self.bulletsShips[-1])[1] < 0:
                     self.canevas.delete(self.bulletsShips[-1])
@@ -262,10 +269,7 @@ class Game(Move):
             self.printScore = "score :",self.scoring
             self.score.configure( text = self.printScore)
 
-
-
             for bullet in self.bulletsAlien:
-                
                 if self.canevas.coords(bullet)[3] > self.canevas.coords(self.spaceships)[1]   and self.canevas.coords(bullet)[1] < self.canevas.coords(self.spaceships)[3]   and self.canevas.coords(bullet)[0] < self.canevas.coords(self.spaceships)[2]   and self.canevas.coords(bullet)[2] > self.canevas.coords(self.spaceships)[0]:
                     self.lives.append( self.lives[-1] - 1)
                     self.printLives = "vie restantes: ",self.lives[-1]
@@ -284,11 +288,9 @@ class Game(Move):
 
             #def defeat(self)
             if self.lives[-1] == 0:
-                self.dx = 0
-                self.dy = 0
-                self.canevas.delete(self.spaceships)
                 self.compteur_edf = 1
 
+            self.w.after(self.t, self.hitBox)
     
 
        
