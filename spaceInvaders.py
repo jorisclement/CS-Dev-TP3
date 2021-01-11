@@ -18,25 +18,25 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import Move, Draw
+from spaceInvaders_Lib import Game
 
 
 
 ## Variables globales ##
-dx = 5
+dx = 3
 dy = 0  # Nombre de pixels dont on déplacera les aliens toutes les t ms
 t = 20
 
 ## Programme principal ##
 
 
+
 # Affichage du jeu #
-move = Move(dx, dy, t)
-move.moveAliens()
-move.moveSpaceships()
-move.moveBulet2()
-move.moveBulet() 
-move.Mainloop()
+
+game = Game(dx, dy, t)
+game.hitBox()
+
+game.Mainloop()
 
 
 
