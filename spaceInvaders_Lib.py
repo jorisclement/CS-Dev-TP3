@@ -38,7 +38,7 @@ class Window:
         self.canevas.tag_raise("C")
         self.canevas.tag_lower("D")      
 
-        self.score = Label(self.w, text = 'score :', fg = 'black')
+        self.score = Label(self.w, text = 'score : 0', fg = 'black')
         self.score.grid(row = 0, column = 0, sticky = 'nw')
         self.score.configure(font = 20)
 
@@ -201,7 +201,8 @@ class Game(Move):
         Move.moveBulet2(self)
         Move.moveBulet(self)
         Move.moveBuletAliens(self)
-        self.lives=[3]
+        self.lives = [3]
+        self.scoring = 0
  
 
     def hitBox(self):
@@ -219,9 +220,15 @@ class Game(Move):
                         
                     self.Aliens2.remove(alien)
                     self.canevas.delete(alien)
-                
+                    self.scoring = self.scoring + 100
+    
                     self.canevas.delete(self.bulletsShips[-1])
                     self.bulletsShips.pop(-1)
+        #def scoring (self):            
+        self.printScore = "score :",self.scoring
+        self.score.configure( text = self.printScore)
+
+
 
         for bullet in self.bulletsAlien:
             
@@ -242,6 +249,9 @@ class Game(Move):
         
         self.w.after(self.t, self.hitBox)
 
+       
+
+    
    
 
            
