@@ -23,9 +23,9 @@ from spaceInvaders_Lib import Game
 
 
 ## Variables globales ##
-dx = 3
-dy = 0  # Nombre de pixels dont on déplacera les aliens toutes les t ms
 t = 20
+dx = 3    # Nombre de pixels dont on déplacera les aliens toutes les t ms
+dy = 0  
 
 ## Programme principal ##
 
