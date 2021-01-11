@@ -37,7 +37,9 @@ dy = 0
 # Affichage du jeu #
 game = Game(Hi, dx, dy, t)
 game.hitBox()
+game.Scoring()
 game.Mainloop()
+
 
 
 
