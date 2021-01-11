@@ -100,7 +100,8 @@ class Draw(Window):
 
 
     def createBuletsAliens(self):
-        r = randint(0, 40)
+        r = randint(0, len(self.Aliens2) - 1)
+               
         bulletAlien = self.canevas.create_line((self.canevas.coords(self.Aliens2[r])[0] + self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3], (self.canevas.coords(self.Aliens2[r])[0]+self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3] + 40, fill = "black", tags = "E", width = 10)
         
         self.canevas.move(bulletAlien, 0, 10)
@@ -113,32 +114,39 @@ class Move(Draw):
         (self.line1, self.line2, self.line3, self.line4, self.line5) = Draw.drawAliens(self)
         self.spaceships = Draw.drawSpaceships(self)
         Draw.createBuletsAliens(self)
+        
         self.dx = dx
         self.dy = dy
         self.t = t
         self.c = 0
+        self.bounce = 0
         
 
     def moveAliens(self):
-        
-        if self.canevas.coords(self.line1[-1])[2] > 1200  or self.canevas.coords(self.line2[-1])[2] > 1200 or self.canevas.coords(self.line3[-1])[2] > 1200  or self.canevas.coords(self.line4[-1])[2] > 1200  or self.canevas.coords(self.line5[-1])[2] > 1200:
-                
-            self.dx = -self.dx
-            self.c += 1
+        for line in self.Aliens:
+            if self.canevas.coords(line[-1])[2] > 1200 and self.bounce == 0:     
+                self.dx = -self.dx
+                if self.dx < 0:
+                    self.bounce = 1
 
-        elif self.canevas.coords(self.line1[0])[0] < 0  or self.canevas.coords(self.line2[0])[0] < 0  or self.canevas.coords(self.line3[0])[0] < 0 or self.canevas.coords(self.line4[0])[0] < 0  or self.canevas.coords(self.line4[0])[0] < 0: 
-            self.dx = -self.dx
-            self.c += 1      
+            elif self.canevas.coords(line[0])[0] < 0 and self.bounce == 1:   
+                self.dx = -self.dx
+                self.c = 2     
+                if self.dx > 0:
+                    self.bounce = 0
+
 
         if self.c == 2:
             self.canevas.move("B", 0, 50)
             self.c = 0
 
-        elif self.canevas.coords(self.line5[-1])[3] > 580:
-            self.canevas.delete(self.spaceships)
-            self.dx = 0
-            self.dy = 0
+        for alien in self.Aliens2:
+            if self.canevas.coords(alien)[3] > 580:
+                self.canevas.delete(self.spaceships)
+                self.dx = 0
+                self.dy = 0
 
+        
         self.canevas.move("B", self.dx, self.dy)        
         self.w.after(self.t, self.moveAliens)
 
@@ -196,6 +204,10 @@ class Game(Move):
             for alien in line:
                 if self.canevas.coords(self.bulletsShips[-1])[1] < self.canevas.coords(alien)[3]   and self.canevas.coords(self.bulletsShips[-1])[3] > self.canevas.coords(alien)[1]   and self.canevas.coords(self.bulletsShips[-1])[0] < self.canevas.coords(alien)[2]   and self.canevas.coords(self.bulletsShips[-1])[2] > self.canevas.coords(alien)[0]:
                     line.remove(alien)
+                    if len(line) == 0:
+                        del self.Aliens[self.Aliens.index(line)]
+                        
+                    self.Aliens2.remove(alien)
                     self.canevas.delete(alien)
                 
                     self.canevas.delete(self.bulletsShips[-1])
