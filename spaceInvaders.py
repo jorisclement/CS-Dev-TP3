@@ -34,6 +34,7 @@ t = 20
 move = Move(dx, dy, t)
 move.moveAliens()
 move.moveSpaceships()
+move.moveBulet2()
 move.moveBulet() 
 move.Mainloop()
 

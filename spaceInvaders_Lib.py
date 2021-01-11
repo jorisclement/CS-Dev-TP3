@@ -11,15 +11,16 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -Créer un condition de destruction des balles ( sortie d'écran et contact avec un alien)
-     -Régler l'accélération des balles (boucle infinie) et créer une liste de balles pour ne pas ecraser la 1er balle lors du 2ieme tire
+TODO -mettre un cool down sur les tirs (on peut trop spammer je pense)
+     -faire le score
      -tir des aliens
      -gèrer les vies
+     -delay entre les balles
 """
 
 ## Importation des bibliothéques ##
 from tkinter import Tk ,Label, Button, Canvas, PhotoImage
-
+#import time 
 
 ## Classes ##
 class Window:
@@ -31,10 +32,11 @@ class Window:
         self.canevas = Canvas(self.w, width = 1200, height = 650,  bg ='white')  
         self.canevas.grid(row = 1, column = 0)
         self.photo = PhotoImage(file="jean-pierre.gif")
-        self.item = self.canevas.create_image(600, 500, image = self.photo, tags = "C")
-        self.canevas.tag_raise("A")     # Ces trois lignes gèrent la position en profondeur des différents élèments du
+        self.item = self.canevas.create_image(600, 500, image = self.photo, tags = "D")
+        self.canevas.tag_raise("A")     # Ces quatres lignes gèrent la position en profondeur des différents élèments du
         self.canevas.tag_raise("B")     # Canvas
-        self.canevas.tag_lower("C")       
+        self.canevas.tag_raise("C")
+        self.canevas.tag_lower("D")      
 
         self.score = Label(self.w, text = 'score :', fg = 'black')
         self.score.grid(row = 0, column = 0, sticky = 'nw')
@@ -69,7 +71,7 @@ class Draw(Window):
         for i in range(8):
             line1.append(self.canevas.create_rectangle(120*i+50, 10, 120*i+120, 40, fill = "red", tags = "B"))
             line2.append(self.canevas.create_oval(120*i+50, 50, 120*i+120, 80, fill = "yellow", tags = "B"))
-            line3.append(self.canevas.create_oval(120*i+50, 90, 120*i+120, 120, fill = "green", tags = "B"))
+            line3.append(self.canevas.create_oval(120*i+50, 90, 120*i+120, 120, fill = "blue", tags = "B"))
             line4.append(self.canevas.create_rectangle(120*i+50, 130, 120*i+120, 160, fill = "magenta", tags = "B"))
             line5.append(self.canevas.create_oval(120*i+50, 170, 120*i+120, 200, fill = "black", tags = "B"))
 
@@ -79,19 +81,27 @@ class Draw(Window):
         
 
     def drawSpaceships(self):
-        spaceships = self.canevas.create_rectangle(560, 580, 640, 650, fill = "green", tags = "A")
+        self.spaceships = self.canevas.create_rectangle(560, 580, 640, 650, fill = "green", tags = "A")
 
-        return spaceships
+        return self.spaceships
+
+
+    def createBulet(self, event):
+        self.canevas.create_line((self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 580, (self.canevas.coords(self.spaceships)[0]+self.canevas.coords(self.spaceships)[2])/2, 620, fill = "green", width = 10,tags = "C")
+        #time.sleep(0.1)
+    
 
 class Move(Draw):
     def __init__(self, dx, dy, t):
         Draw.__init__(self)
         self.line5 = Draw.drawAliens(self)[4]
         self.spaceships = Draw.drawSpaceships(self)
+        self.bullets = []
         self.dx = dx
         self.dy = dy
         self.t = t
         self.c = 0
+
 
     def moveAliens(self):
         if self.canevas.coords(self.line5[-1])[2] > 1200 or self.canevas.coords(self.line5[0])[0] < 0:
@@ -124,24 +134,22 @@ class Move(Draw):
         else :
             self.canevas.move(self.spaceships,0,0)
 
+
     def moveSpaceships(self):
         self.canevas.bind_all('<Right>', self.right)
         self.canevas.bind_all('<Left>', self.left)
-         
-
-    def fire(self,event):
-        self.bulet = self.canevas.create_oval(self.canevas.coords(self.spaceships)[0], self.canevas.coords(self.spaceships)[1],self.canevas.coords(self.spaceships)[2],self.canevas.coords(self.spaceships)[3], fill = "green", tags = "A")
-        self.w.after(self.t, self.moveBulet2)
-
-    def moveBulet2 (self):
-       # while self.canevas.coords(self.bulet)[0] 
-        self.canevas.move(self.bulet,0,-20)
+        
+        
+    def moveBulet2(self):
+        self.canevas.move("C", 0, -20)
         self.w.after(self.t, self.moveBulet2)
         
 
-    def moveBulet (self):
-        self.canevas.bind_all('<space>', self.fire)
 
+    def moveBulet(self):
+        self.canevas.bind_all('<space>', self.createBulet) 
+        
+        
     
     def Mainloop(self):
         self.w.mainloop()
