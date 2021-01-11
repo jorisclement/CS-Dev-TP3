@@ -15,6 +15,7 @@ TODO -faire les barricades
      -faire le score
      -appliquer un effet aux tirs des aliens
      -gèrer les vies
+     -delay entre les balles
 """
 
 ## Importation des bibliothéques ##
@@ -43,7 +44,9 @@ class Window:
         self.score.grid(row = 0, column = 0, sticky = 'nw')
         self.score.configure(font = 20)
 
-        self.labelLives = Label(self.w, text = 'Vie restantes: 3', fg = 'black')
+       
+        
+        self.labelLives = Label(self.w, text = "vie restantes : 3", fg = 'black')
         self.labelLives.grid(row = 0, column = 0, sticky = 'ne')
         self.labelLives.configure(font = 20)
 
@@ -64,7 +67,9 @@ class Window:
 class Draw(Window):
     def __init__(self, hi):
         Window.__init__(self, hi)
-        self.bulletsShips = [self.canevas.create_line(1249, 999, self.Hi, 1000)]
+        self.compteur_edf = 0
+        self.bulletsShips = [self.canevas.create_line(1249, 649, 1250, 650)]
+        self.bulletsAlien = [self.canevas.create_line(1249, 649, 1250, 650)]
     
     def drawAliens(self):
         line1 = []
@@ -103,14 +108,18 @@ class Draw(Window):
 
     def createBuletsAliens(self):
         r = randint(0, len(self.Aliens2) - 1)
-               
-        bulletAlien = self.canevas.create_line((self.canevas.coords(self.Aliens2[r])[0] + self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3], (self.canevas.coords(self.Aliens2[r])[0]+self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3] + 40, fill = "black", tags = "E", width = 10)
+        if self.compteur_edf == 1:
+            return -1
+        else:    
+            self.bulletAlien = self.canevas.create_line((self.canevas.coords(self.Aliens2[r])[0] + self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3], (self.canevas.coords(self.Aliens2[r])[0]+self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3] + 40, fill = "black", tags = "E", width = 10)
+            self.bulletsAlien.append(self.bulletAlien)
+            self.w.after(4000, self.createBuletsAliens)
         
 
-        self.w.after(4000, self.createBuletsAliens)
 
 
-    def createBarricade(self):
+
+    def drawBarricades(self):
         Barricade1 = []
         Barricade2 = []
         Barricade3 = []
@@ -126,7 +135,7 @@ class Draw(Window):
         #self.canevas.create_rectangle(50, self.Hi - 200, 350, self.Hi - 100, fill = "black")
         #self.canevas.create_rectangle(450, self.Hi - 200, 750, self.Hi - 100, fill = "black")
         #self.canevas.create_rectangle(850, self.Hi - 200, 1150, self.Hi - 100, fill = "black")
-        
+        return Barricade1, Barricade2, Barricade3
 
 class Move(Draw):
     def __init__(self, hi, dx, dy, t):
@@ -135,7 +144,8 @@ class Move(Draw):
         self.spaceships = Draw.drawSpaceships(self)
        
         Draw.createBuletsAliens(self)
-        Draw.createBarricade(self)
+        (self.Barricades1, self.Barricades2, self.Barricades3) = Draw.drawBarricades(self)
+        self.Barricades = self.Barricades1 + self.Barricades2 + self.Barricades3
         
         self.dx = dx
         self.dy = dy
@@ -164,9 +174,7 @@ class Move(Draw):
 
         for alien in self.Aliens2:
             if self.canevas.coords(alien)[3] > self.canevas.coords(self.spaceships)[1]:
-                self.canevas.delete(self.spaceships)
-                self.dx = 0
-                self.dy = 0
+                self.compteur_edf = 1
 
         
         self.canevas.move("B", self.dx, self.dy)        
@@ -193,16 +201,17 @@ class Move(Draw):
         
         
     def moveBulet2(self):
-        self.canevas.move("C", 0, -10)
+        self.canevas.move("C", 0, -20)
         self.w.after(self.t, self.moveBulet2)
         
+
 
     def moveBulet(self):
         self.canevas.bind_all('<space>', self.createBuletsShips)
 
     
     def moveBuletAliens(self):
-        self.canevas.move("E", 0, 10)
+        self.canevas.move("E", 0, 20)
         self.w.after(self.t, self.moveBuletAliens)
     
 
@@ -215,9 +224,11 @@ class Game(Move):
         Move.moveBulet2(self)
         Move.moveBulet(self)
         Move.moveBuletAliens(self)
-
+        self.lives=[3]
+ 
 
     def hitBox(self):
+
         if self.canevas.coords(self.bulletsShips[-1])[1] < 0:
                 self.canevas.delete(self.bulletsShips[-1])
                 self.bulletsShips.pop(-1)
@@ -234,4 +245,36 @@ class Game(Move):
                 
                     self.canevas.delete(self.bulletsShips[-1])
                     self.bulletsShips.pop(-1)
+
+        for bullet in self.bulletsAlien:
+            
+            if self.canevas.coords(bullet)[3] > self.canevas.coords(self.spaceships)[1]   and self.canevas.coords(bullet)[1] < self.canevas.coords(self.spaceships)[3]   and self.canevas.coords(bullet)[0] < self.canevas.coords(self.spaceships)[2]   and self.canevas.coords(bullet)[2] > self.canevas.coords(self.spaceships)[0]:
+                self.lives.append( self.lives[-1] - 1)
+                self.printLives = "vie restantes: ",self.lives[-1]
+                self.labelLives.configure (text = self.printLives)
+                self.canevas.delete(self.bulletsAlien[-1])
+                self.bulletsAlien.pop(-1)
+
+        if len(self.Barricades) != 0:
+            for barricade in self.Barricades:
+                if self.canevas.coords(self.bulletsAlien[-1])[3] > self.canevas.coords(barricade)[1]   and self.canevas.coords(self.bulletsAlien[-1])[1] < self.canevas.coords(barricade)[3]   and self.canevas.coords(self.bulletsAlien[-1])[0] < self.canevas.coords(barricade)[2]   and self.canevas.coords(self.bulletsAlien[-1])[2] > self.canevas.coords(barricade)[0]:
+                    self.canevas.delete(barricade)
+                    self.Barricades.remove(barricade)
+
+                    self.canevas.delete(self.bulletsAlien[-1])
+                    self.bulletsAlien.pop(-1)
+
+    #def defeat(self)
+        if self.lives[-1] == 0:
+            self.dx = 0
+            self.dy = 0
+            self.canevas.delete(self.spaceships)
+            self.compteur_edf = 1
+
+        
         self.w.after(self.t, self.hitBox)
+
+   
+
+           
+

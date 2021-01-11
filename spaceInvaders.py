@@ -31,6 +31,7 @@ t = 20
 ## Programme principal ##
 
 
+
 # Affichage du jeu #
 game = Game(Hi, dx, dy, t)
 game.hitBox()
