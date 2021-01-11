@@ -107,10 +107,12 @@ class Draw(Window):
 
 
     def createBuletsAliens(self):
-        r = randint(0, len(self.Aliens2) - 1)
         if self.compteur_edf == 1:
             return -1
-        else:    
+        
+        else:
+            r = randint(0, len(self.Aliens2) - 1)
+
             self.bulletAlien = self.canevas.create_line((self.canevas.coords(self.Aliens2[r])[0] + self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3], (self.canevas.coords(self.Aliens2[r])[0]+self.canevas.coords(self.Aliens2[r])[2])/2, self.canevas.coords(self.Aliens2[r])[3] + 40, fill = "black", tags = "E", width = 10)
             self.bulletsAlien.append(self.bulletAlien)
             self.w.after(4000, self.createBuletsAliens)
