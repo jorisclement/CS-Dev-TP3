@@ -28,7 +28,7 @@ class Window:
         self.Hi = hi
 
         self.w = Tk()     
-        self.w.geometry('2400x1050')
+        self.w.geometry('2400x100')
         self.w.title('Space Invaders')
         
         self.canevas = Canvas(self.w, width = 1200, height = self.Hi,  bg ='white')  
