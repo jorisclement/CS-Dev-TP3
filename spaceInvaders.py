@@ -23,7 +23,7 @@ from spaceInvaders_Lib import Game
 
 
 ## Variables globales ##
-Hi = 1000   # Hauteur en pixels du canevas
+Hi = 1000   # Hauteur en pixels du canevas 
 dx = 3
 dy = 0      # Nombre de pixels dont on déplacera les aliens toutes les t ms
 t = 20
@@ -37,7 +37,9 @@ dy = 0
 # Affichage du jeu #
 game = Game(Hi, dx, dy, t)
 game.hitBox()
+game.Scoring()
 game.Mainloop()
+
 
 
 
