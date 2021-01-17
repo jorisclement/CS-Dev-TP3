@@ -12,7 +12,7 @@ class Window:
         self.Hi = hi # Valeur de la hauteur du canvas
 
         self.w = Tk() # Création de la fenêtre 
-        self.w.geometry('2400x1000') # Dimension de la fenêtre
+        self.w.geometry('2400x1100') # Dimension de la fenêtre
         self.w.title('Space Invaders')
         
         self.canevas = Canvas(self.w, width = 1200, height = self.Hi,  bg ='white')  # Dimension du canvas

@@ -34,7 +34,7 @@ class Draw(Window):
    
     def drawSpaceships(self):
         # Création du vaisseau sous forme d'un carré vert
-        self.spaceships = self.canevas.create_rectangle(561, 930, 641, 1000, fill = "green", tags = "A")
+        self.spaceships = self.canevas.create_rectangle(561, self.Hi - 70, 641, self.Hi, fill = "green", tags = "A")
 
         return self.spaceships
 
