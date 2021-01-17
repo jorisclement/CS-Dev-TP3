@@ -23,7 +23,7 @@ from game import Game
 
 
 # -----------------------------------------------------Variables globales---------------------------------------------------------------- #
-Hi = 700  # Hauteur en pixels du canevas 
+Hi = 1000  # Hauteur en pixels du canevas 
 dx = 3    # Nombre de pixels dont on déplacera les aliens toutes les t ms sur l'axe des X
 dy = 0    # Nombre de pixels dont on déplacera les aliens toutes les t ms sur l'axe des Y
 t = 20    
