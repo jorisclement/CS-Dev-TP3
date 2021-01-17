@@ -1,12 +1,12 @@
 
-## Importation des bibliothéques ##
+#------------------------------------------------Importation des bibliothéques-------------------------------------------------------------#
 from move import Move
 from draw import Draw
 
 from tkinter import Label, Button, PhotoImage
 
 
-## Classes ##
+#--------------------------------------------------------------Classes-------------------------------------------------------------------- #
 class Game(Move):
     # Classe gérant tout ce qui concerne le jeu pure telle que les hitboxs, le score, les conditions de victoire et de 
     # défaite.
