@@ -3,16 +3,16 @@
 from window import Window
 from random import randint
 
-#Cette classe permet de créer les differentes formes necessaires au programme,(aliens,spaceships,balles,barricades).
 
 class Draw(Window):
+
     def __init__(self, hi):
         Window.__init__(self, hi) # Héritage de la fonction window
         self.stop = 0  # Valeur utilisée pour arreter le programme quand elle passera à 1
         self.bulletsShips = [self.canevas.create_line(1249, 649, 1250, 650)] # Création d'une liste de balles pour le vaisseau (avec 1 element pour qu'elle ne soit jamais vide)
         self.bulletsAlien = [self.canevas.create_line(1249, 649, 1250, 650)] # Création d'une liste de balles pour les aliens (avec 1 element pour qu'elle ne soit jamais vide)
     
-    # Fonction qui permet de créer les aliens par ligne de 8 aliens
+    # Méthode qui permet de créer les aliens par ligne de 8 aliens
     def drawAliens(self):
         line1 = []
         line2 = []

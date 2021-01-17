@@ -2,7 +2,7 @@
 
 from draw import Draw
 
-# Cette classe permet de déplacer les objet créés dans la draw
+# Cette classe permet de déplacer les objets créés dans la classe draw
 class Move(Draw):
     def __init__(self, hi, dx, dy, t):
         Draw.__init__(self, hi) # Héritage de la fonction Draw
