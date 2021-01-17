@@ -21,7 +21,6 @@ class Move(Draw):
         
 
     def moveAliens(self):
-        print(self.stop)
         if self.stop == 1:
             return -1
         

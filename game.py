@@ -144,7 +144,6 @@ class Game(Move):
 
 
     def Reload(self):
-        print(self.cLoose)
         self.canevas.delete(all)
         
         self.scoring = 0
