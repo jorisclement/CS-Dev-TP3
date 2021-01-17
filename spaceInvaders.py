@@ -1,4 +1,4 @@
-#@Copyright: Joris CLEMENT, Corto Deschamps
+##@Copyright: Joris CLEMENT, Corto Deschamps
 #Header
 """
 ce programme permet de jouer dans une interface graphique à space invader
@@ -11,9 +11,9 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -
-     -
-     -
+TODO -Pouvoir relancer une partie (fonctionnelle) à n'importe quelle moment
+     -Appliquer un effet a l'impacte tirs des aliens (pour aller plus loin)
+     -Tableau des scores (pour aller plus loin)
 """
 
 

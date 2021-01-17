@@ -1,20 +1,3 @@
-#@Copyright: Joris CLEMENT, Corto Deschamps
-#Header
-"""
-ce programme permet de jouer dans une interface graphique à space invader
-vous avez 3 vies, le but et d'avoir de le meilleur score possible
-Auteur: Joris CLEMENT Corto DESCHAMPS.
-date de réalisation: 22/12/2020
-
-
-Github:https://github.com/jorisclement/CS-Dev-TP3.git
-
-"""
-"""
-TODO -Pouvoir relancer une partie (fonctionnelle) à n'importe quelle moment
-     -Appliquer un effet a l'impacte tirs des aliens (pour aller plus loin)
-     -Tableau des scores (pour aller plus loin)
-"""
 
 #------------------------------------------------Importation des bibliothéques-------------------------------------------------------------#
 from move import Move
