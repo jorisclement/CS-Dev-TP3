@@ -17,7 +17,7 @@ TODO -
 """
 
 
-## Importation des bibliothéques ##
+#------------------------------------------------- Importation des bibliothéques----------------------------------------------------------#
 from game import Game
 
 
