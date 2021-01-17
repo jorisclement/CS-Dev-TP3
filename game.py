@@ -11,11 +11,9 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -Pouvoir relancer une partie à n'importe quelle moment
-     -Faire un elif self.stop = 0 à la place des else dans les fonctions utilisant le .after
-     -Appliquer un effet aux tirs des aliens
-     -Faire le bouton Yes pour laisser le temps au joueur de se "préparer" entre 2 parties
-     -Tableau des scores
+TODO -Pouvoir relancer une partie (fonctionnelle) à n'importe quelle moment
+     -Appliquer un effet a l'impacte tirs des aliens (pour aller plus loin)
+     -Tableau des scores (pour aller plus loin)
 """
 
 ## Importation des bibliothéques ##
