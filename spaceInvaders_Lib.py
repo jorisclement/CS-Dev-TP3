@@ -11,11 +11,9 @@ Github:https://github.com/jorisclement/CS-Dev-TP3.git
 
 """
 """
-TODO -Pouvoir relancer une partie à n'importe quelle moment
-     -Faire un elif self.stop = 0 à la place des else dans les fonctions utilisant le .after
-     -Appliquer un effet aux tirs des aliens
-     -Faire le bouton Yes pour laisser le temps au joueur de se "préparer" entre 2 parties
-     -Tableau des scores
+TODO -Pouvoir relancer une partie (fonctionnelle) à n'importe quelle moment
+     -Appliquer un effet a l'impacte tirs des aliens (pour aller plus loin)
+     -Tableau des scores (pour aller plus loin)
 """
 
 ## Importation des bibliothéques ##
@@ -28,7 +26,7 @@ class Window:
         self.Hi = hi
 
         self.w = Tk()     
-        self.w.geometry('2400x100')
+        self.w.geometry('2400x1000')
         self.w.title('Space Invaders')
         
         self.canevas = Canvas(self.w, width = 1200, height = self.Hi,  bg ='white')  
@@ -69,6 +67,7 @@ class Window:
 class Draw(Window):
     def __init__(self, hi):
         Window.__init__(self, hi)
+        
         self.stop = 0
         self.bulletsShips = [self.canevas.create_line(1249, 649, 1250, 650)]
         self.bulletsAlien = [self.canevas.create_line(1249, 649, 1250, 650)]
@@ -91,7 +90,7 @@ class Draw(Window):
         self.Aliens2 = line1 + line2 + line3 + line4 +line5
     
     def drawSpaceships(self):
-        self.spaceships = self.canevas.create_rectangle(561, 930, 641, 1000, fill = "green", tags = "A")
+        self.spaceships = self.canevas.create_rectangle(561, self.Hi-70, 641, self.Hi, fill = "green", tags = "A")
 
         return self.spaceships
 
