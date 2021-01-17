@@ -3,10 +3,11 @@
 from tkinter import Tk ,Label, Button, Canvas, PhotoImage
 
 
-# cette classe permet de créer notre interface graphique, notamment la fenêtre dans laquelle on trouve le canvas, 2 boutons,
-# l'affichage du score et du nombre de vie.
+
 
 class Window:
+    # cette classe permet de créer notre interface graphique, notamment la fenêtre dans laquelle on trouve le canvas, 2 boutons,
+    # l'affichage du score et du nombre de vie.
     def __init__(self, hi):
         self.Hi = hi # Valeur de la hauteur du canvas
 

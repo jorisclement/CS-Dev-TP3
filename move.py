@@ -2,8 +2,8 @@
 
 from draw import Draw
 
-# Cette classe permet de déplacer les objet créés dans la draw
 class Move(Draw):
+    # Cette classe permet de déplacer les objet créés dans la draw
     def __init__(self, hi, dx, dy, t):
         Draw.__init__(self, hi) # Héritage de la fonction Draw
         Draw.drawAliens(self)
@@ -21,8 +21,9 @@ class Move(Draw):
         self.bounce = 0
         self.cLoose = 0
         
-    # Création du déplacement des aliens
     def moveAliens(self):
+        # Création du déplacement des aliens
+
         if self.stop == 1: # Condition verifiée lorsqu'on arrête le programme (empêche la méthode de boucler indéfiniment)
             return -1
         
@@ -50,8 +51,8 @@ class Move(Draw):
             self.canevas.move("B", self.dx, self.dy)        
             self.w.after(self.t, self.moveAliens)
 
-    # Evenement qui permet d'aller à droite
     def right (self,event):
+        # Evenement qui permet d'aller à droite
         if self.stop == 1:
             return -1
         
@@ -61,8 +62,8 @@ class Move(Draw):
             else :
                 self.canevas.move(self.spaceships,0,0) 
         
-    # Evenement qui permet de déplacer le vaisseau à gauche
     def left (self,event):
+        # Evenement qui permet de déplacer le vaisseau à gauche
         if self.stop == 1:
             return -1
         
@@ -72,8 +73,8 @@ class Move(Draw):
             else :
                 self.canevas.move(self.spaceships,0,0)
 
-    # Permet d'associer une touches aux événements précedents
     def moveSpaceships(self):
+        # Permet d'associer une touches aux événements précedents
         self.canevas.bind_all('<Right>', self.right) # Appel l'événement right lorsqu'on appui sur la touche droite
         self.canevas.bind_all('<Left>', self.left)
         
@@ -85,13 +86,12 @@ class Move(Draw):
             self.canevas.move("C", 0, -20) # Permet de déplacer les balles du vaisseau (tag C) de 20 pixels vers le haut
             self.w.after(self.t, self.moveBulet2) # Le déplacement se répéte toute les t secondes
             
-
-    #Permet de créer un balle lorsqu'on appuie sur la barre espace
     def moveBulet(self):
+        #Permet de créer un balle lorsqu'on appuie sur la barre espace
         self.canevas.bind_all('<space>', self.createBuletsShips)
 
-    # Permet de faire bouger les balles aliens précédemment créées
     def moveBuletAliens(self):
+        # Permet de faire bouger les balles aliens précédemment créées
         if self.stop == 1:
             return -1
         else:
