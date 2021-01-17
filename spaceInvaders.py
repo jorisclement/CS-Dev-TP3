@@ -3,7 +3,7 @@
 """
 ce programme permet de jouer dans une interface graphique à space invader
 vous avez 3 vies, le but et d'avoir de le meilleur score possible
-Auteur: Joris CLEMENT.
+Auteur: Joris CLEMENT Corto DESCHAMPS.
 date de réalisation: 22/12/2020
 
 
@@ -18,7 +18,7 @@ TODO -
 
 
 ## Importation des bibliothéques ##
-from spaceInvaders_Lib import Game
+from game import Game
 
 
 
