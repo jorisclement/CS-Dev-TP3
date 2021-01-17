@@ -26,7 +26,7 @@ class Window:
         self.Hi = hi
 
         self.w = Tk()     
-        self.w.geometry('2400x1000')
+        self.w.geometry('2400x1200')
         self.w.title('Space Invaders')
         
         self.canevas = Canvas(self.w, width = 1200, height = self.Hi,  bg ='white')  
@@ -149,6 +149,7 @@ class Move(Draw):
         
 
     def moveAliens(self):
+        print(self.stop)
         if self.stop == 1:
             return -1
         
@@ -173,8 +174,8 @@ class Move(Draw):
                 if self.canevas.coords(alien)[3] >= self.canevas.coords(self.spaceships)[1]:
                    self.cLoose = 1
 
-        self.canevas.move("B", self.dx, self.dy)        
-        self.w.after(self.t, self.moveAliens)
+            self.canevas.move("B", self.dx, self.dy)        
+            self.w.after(self.t, self.moveAliens)
 
     
     def right (self,event):
@@ -259,6 +260,7 @@ class Game(Move):
                         self.canevas.delete(alien)
 
                         self.scoring = self.scoring + 100
+                        self.Scoring()
         
                         self.canevas.delete(self.bulletsShips[-1])
                         self.bulletsShips.pop(-1)
@@ -313,7 +315,6 @@ class Game(Move):
     def Scoring(self):        
         self.printScore = "score :", str(self.scoring)
         self.score.configure(text = "".join(self.printScore))
-        self.w.after(self.t, self.Scoring)
 
 
     def Defeat(self):
@@ -346,34 +347,58 @@ class Game(Move):
 
 
     def Reload(self):
+        print(self.cLoose)
         self.canevas.delete(all)
         
+        self.scoring = 0
+        self.Scoring()
+        
+        self.lives = 3
+        self.printLives = "vie restantes: ", str(self.lives)
+        
         if self.cLoose == 1:
-            self.labelDefeat.destroy
+            self.labelDefeat.destroy()
         else:
             self.labelWin.destroy()
 
         self.photo = PhotoImage(file="jean-pierre.gif")
         self.item = self.canevas.create_image(600, 500, image = self.photo, tags = "D")
+
+        self.labelHelp = Label(self.w, text = "Etes vous prêt à jouer?", fg = 'black')
+        self.labelHelp.grid(row = 1, column = 0, sticky = "n")
+        self.labelHelp.configure(font = 20)
+
+        self.cLoose = 0
+        self.stop = 0
         
         Draw.drawAliens(self)
-        Draw.drawBarricades(self)
+        (self.Barricades1, self.Barricades2, self.Barricades3) = Draw.drawBarricades(self)
+        self.Barricades = self.Barricades1 + self.Barricades2 + self.Barricades3
         Draw.drawSpaceships(self)
 
-        self.buttonYes = Button(self.w, text = "oui", command ="")
-        self.buttonYes.grid(row = 1, collumn = 0)
+        self.buttonYes = Button(self.w, text = "oui", command = self.reMove)
+        self.buttonYes.grid(row = 1, column = 0)
         self.buttonYes.configure(font = 20)
 
-        self.stop = 0
+        
+    def reMove(self):
+        self.buttonYes.destroy()
+        self.labelHelp.destroy()
+        self.hitBox()
 
+        Move.moveAliens(self)
+        Move.moveSpaceships(self)
+        Move.moveBulet2(self)
+        Move.moveBulet(self)
+        Move.moveBuletAliens(self)
 
-                
+        Draw.createBuletsAliens(self)
 
+        
 
     
             
     
-
        
 
     
