@@ -17,27 +17,25 @@ TODO -
 """
 
 
-## Importation des bibliothéques ##
+#---------------------------------------------------- Importation des bibliothéques ------------------------------------------------------ #
 from spaceInvaders_Lib import Game
 
 
 
-## Variables globales ##
-Hi = 600   # Hauteur en pixels du canevas 
-dx = 3
-dy = 0      # Nombre de pixels dont on déplacera les aliens toutes les t ms
-t = 20
-dx = 3    # Nombre de pixels dont on déplacera les aliens toutes les t ms
-dy = 0  
+# -----------------------------------------------------Variables globales---------------------------------------------------------------- #
+Hi = 700  # Hauteur en pixels du canevas 
+dx = 3    # Nombre de pixels dont on déplacera les aliens toutes les t ms sur l'axe des X
+dy = 0    # Nombre de pixels dont on déplacera les aliens toutes les t ms sur l'axe des Y
+t = 20    
 
-## Programme principal ##
+
+#------------------------------------------------------- Programme principal---------------------------------------------------------------#
 
 
 
 # Affichage du jeu #
 game = Game(Hi, dx, dy, t)
 game.hitBox()
-game.Scoring()
 game.Mainloop()
 
 
